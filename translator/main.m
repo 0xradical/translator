@@ -8,12 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+// helper function to print NSStrings to STDOUT
+static void NSPrint(NSString *format, ...) {
+    va_list args;
+    va_start(args, format);
+    
+    NSString *string = [[NSString alloc] initWithFormat:format arguments:args];
+    
+    va_end(args);
+    
+    fprintf(stdout, "%s\n", [string UTF8String]);
+}
+
+
 int main(int argc, const char * argv[])
 {
 
     @autoreleasepool {
-
-//        NSString *format = @"http://translate.google.com.br/translate_a/t?client=t&hl=pt-BR&sl=en&tl=pt&ie=UTF-8&oe=UTF-8&multires=1&prev=enter&oc=1&ssel=0&tsel=0&sc=1&q=%@";
 
         NSString *format = @"https://translate.google.com/translate_a/single?client=t&sl=auto&tl=pt&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qc&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&prev=enter&ssel=0&tsel=4&q=%@";
         
@@ -66,17 +77,46 @@ int main(int argc, const char * argv[])
                                                                  error:&error];
          
             if (error) {
-                NSLog(@"%@", [error description]);
+                NSPrint(@"%@", [error description]);
             }
             else {
-//                NSLog(@"%@", results);
-                NSLog(@"%@", mutableData);
-//                NSLog(@"%@", results[0][0][1]);
-                
+                @try {
+//                    NSLog(@"%@", results);
+//                    NSLog(@"%@", mutableData);
+//                    NSLog(@"%@", results[0][0][1]);
+                    
+                    NSString *translation = results[0][0][0];
+                    NSString *pronunciation = results[0][1][3];
+                    NSString *grammarClass = results[1][0][0];
+                    NSString *definition = results[12][0][1][0][0];
+                    NSString *example = results[12][0][1][0][2];
+                    
+                    if ([translation isEqualTo:query]) {
+                        NSPrint(@"No translation found for %@", query);
+                    }
+                    else {
+                        NSPrint(@"Translations of %@ |%@| ▶%@", query, pronunciation, grammarClass);
+                        
+                        for (NSArray *alternates in results[1][0][2]) {
+                            NSPrint(@"(%@) %@: %@",
+                                    alternates[4],
+                                    alternates[0],
+                                    [alternates[1] componentsJoinedByString:@", "]);
+                        }
+                        
+                        NSPrint(@"Definitions of %@ ▶%@", query, grammarClass);
+                        NSPrint(@"%@", definition);
+                        NSPrint(@"%@", example);
+                    }
+
+                }
+                @catch (NSException *exception) {
+                    NSPrint(@"No translation found for %@", query);
+                }
             }
         }
         else {
-            NSLog(@"%@",[error description]);
+            NSPrint(@"%@",[error description]);
         }
         
     }
