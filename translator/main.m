@@ -13,7 +13,9 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool {
 
-        NSString *format = @"http://translate.google.com.br/translate_a/t?client=t&hl=pt-BR&sl=en&tl=pt&ie=UTF-8&oe=UTF-8&multires=1&prev=enter&oc=1&ssel=0&tsel=0&sc=1&q=%@";
+//        NSString *format = @"http://translate.google.com.br/translate_a/t?client=t&hl=pt-BR&sl=en&tl=pt&ie=UTF-8&oe=UTF-8&multires=1&prev=enter&oc=1&ssel=0&tsel=0&sc=1&q=%@";
+
+        NSString *format = @"https://translate.google.com/translate_a/single?client=t&sl=auto&tl=pt&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qc&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&prev=enter&ssel=0&tsel=4&q=%@";
         
         NSString *query = [NSString stringWithUTF8String:argv[1]];
         
@@ -67,7 +69,10 @@ int main(int argc, const char * argv[])
                 NSLog(@"%@", [error description]);
             }
             else {
-                NSLog(@"%@", results[5][0][2]);
+//                NSLog(@"%@", results);
+                NSLog(@"%@", mutableData);
+//                NSLog(@"%@", results[0][0][1]);
+                
             }
         }
         else {
