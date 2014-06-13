@@ -45,7 +45,7 @@ int main(int argc, const char * argv[])
                                                          encoding:NSUTF8StringEncoding];
             
             // Sanitize stringData
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@",,+"
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[?,,+\\]?"
                                                                                    options:NSRegularExpressionCaseInsensitive
                                                                                      error:NULL];
             
@@ -56,15 +56,38 @@ int main(int argc, const char * argv[])
             NSMutableString *mutableData = [stringData mutableCopy];
             NSMutableString *template;
             NSString *matchedText;
+            NSInteger consideredLength;
             
             for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
                 matchedText = [mutableData substringWithRange:[match range]];
-                
-                template = [NSMutableString stringWithString:@","];
-                
-                for (int i = 0; i < [matchedText length] - 1; i++) {
-                    [template appendString:@"null,"];
+                consideredLength = [matchedText length] - 1;
+
+                if ([[matchedText substringFromIndex:[matchedText length]] isEqualToString:@"]"]){
+                    consideredLength -= 1; // remove the bracket from the count
+                    
+                    template = [NSMutableString stringWithString:@""];
+                    
+                    for (int i = 0; i < consideredLength; i++) {
+                        [template appendString:@",null"];
+                    }
+                    
+                    [template appendString:@"]"];
+                    
                 }
+                else {
+                    if ([[matchedText substringToIndex:1] isEqualToString:@"["]) {
+                        consideredLength -= 1;
+                        template = [NSMutableString stringWithString:@"["];
+                    }
+                    else {
+                        template = [NSMutableString stringWithString:@","];
+                    }
+                    
+                    for (int i = 0; i < consideredLength; i++) {
+                        [template appendString:@"null,"];
+                    }
+                }
+                
                 
                 [mutableData replaceCharactersInRange:[match range] withString:template];
             }
@@ -77,6 +100,7 @@ int main(int argc, const char * argv[])
                                                                  error:&error];
          
             if (error) {
+                // `wow' returns error ...
                 NSPrint(@"%@", [error description]);
             }
             else {
