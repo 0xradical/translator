@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFA77774194C00BE009799F6 /* Translator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77773194C00BE009799F6 /* Translator.m */; };
+		AFA77777194C0422009799F6 /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77776194C0422009799F6 /* Translation.m */; };
 		AFD5A7F51946B620003D763E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD5A7F41946B620003D763E /* Foundation.framework */; };
 		AFD5A7F81946B620003D763E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD5A7F71946B620003D763E /* main.m */; };
 		AFD5A7FC1946B620003D763E /* translator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFD5A7FB1946B620003D763E /* translator.1 */; };
@@ -26,6 +28,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AFA77772194C00BE009799F6 /* Translator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translator.h; sourceTree = "<group>"; };
+		AFA77773194C00BE009799F6 /* Translator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translator.m; sourceTree = "<group>"; };
+		AFA77775194C0422009799F6 /* Translation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translation.h; sourceTree = "<group>"; };
+		AFA77776194C0422009799F6 /* Translation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translation.m; sourceTree = "<group>"; };
 		AFD5A7F11946B620003D763E /* translator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = translator; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5A7F41946B620003D763E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFD5A7F71946B620003D763E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -76,6 +82,10 @@
 				AFD5A7F71946B620003D763E /* main.m */,
 				AFD5A7FB1946B620003D763E /* translator.1 */,
 				AFD5A7F91946B620003D763E /* Supporting Files */,
+				AFA77772194C00BE009799F6 /* Translator.h */,
+				AFA77773194C00BE009799F6 /* Translator.m */,
+				AFA77775194C0422009799F6 /* Translation.h */,
+				AFA77776194C0422009799F6 /* Translation.m */,
 			);
 			path = translator;
 			sourceTree = "<group>";
@@ -139,7 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFA77777194C0422009799F6 /* Translation.m in Sources */,
 				AFD5A7F81946B620003D763E /* main.m in Sources */,
+				AFA77774194C00BE009799F6 /* Translator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +265,7 @@
 				AFD5A8011946B620003D763E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

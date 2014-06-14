@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Translator.h"
+#import "Translation.h"
 
 // helper function to print NSStrings to STDOUT
 static void NSPrint(NSString *format, ...) {
@@ -25,27 +27,40 @@ int main(int argc, const char * argv[])
 {
 
     @autoreleasepool {
-
-        NSString *format = @"https://translate.google.com/translate_a/single?client=t&sl=auto&tl=pt&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qc&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&prev=enter&ssel=0&tsel=4&q=%@";
         
-        NSString *query = [NSString stringWithUTF8String:argv[1]];
+        if (argc < 1) {
+            NSPrint(@"Not enough arguments.");
+            return 1;
+        }
+        else {
+            NSError *error;
+            NSString *query;
+            Translator *tor;
+            Translation *ton;
+            
+            query = [NSString stringWithUTF8String:argv[1]];
+            
+            tor = [[Translator alloc] initWithQuery:query];
+            
+            ton = [tor translate];
+            
+            if ([ton hasError]) {
+                NSPrint(@"%@", [[ton error] description]);
+            }
+            else {
+                NSPrint(@"%@", [ton description]);
+            }
+            
+        }
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:format, query]];
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-        NSURLResponse *response;
-        NSError *error;
-        
-        NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                                 returningResponse:&response
-                                                         error:&error];
         if (data) {
             NSString *stringData = [[NSString alloc] initWithData:data
                                                          encoding:NSUTF8StringEncoding];
             
             // Sanitize stringData
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[?,,+\\]?"
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"((?<=\\,)\\,)|(\\[\\,)|(\\,\\])"
                                                                                    options:NSRegularExpressionCaseInsensitive
                                                                                      error:NULL];
             
@@ -56,37 +71,48 @@ int main(int argc, const char * argv[])
             NSMutableString *mutableData = [stringData mutableCopy];
             NSMutableString *template;
             NSString *matchedText;
-            NSInteger consideredLength;
+//            NSInteger consideredLength;
             
             for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
                 matchedText = [mutableData substringWithRange:[match range]];
-                consideredLength = [matchedText length] - 1;
+                
+                if ([matchedText isEqualTo:@",,"]) {
+                    template = [NSMutableString stringWithString:@",null,"];
+                } else if ([matchedText isEqualTo:@"[,"]) {
+                    template = [NSMutableString stringWithString:@"[null,"];
+                } else if ([matchedText isEqualTo:@",]"]) {
+                    template = [NSMutableString stringWithString:@",null]"];
+                } else {
+                    template = [NSMutableString string];
+                }
+                
+//                consideredLength = [matchedText length] - 1;
 
-                if ([[matchedText substringFromIndex:[matchedText length]] isEqualToString:@"]"]){
-                    consideredLength -= 1; // remove the bracket from the count
-                    
-                    template = [NSMutableString stringWithString:@""];
-                    
-                    for (int i = 0; i < consideredLength; i++) {
-                        [template appendString:@",null"];
-                    }
-                    
-                    [template appendString:@"]"];
-                    
-                }
-                else {
-                    if ([[matchedText substringToIndex:1] isEqualToString:@"["]) {
-                        consideredLength -= 1;
-                        template = [NSMutableString stringWithString:@"["];
-                    }
-                    else {
-                        template = [NSMutableString stringWithString:@","];
-                    }
-                    
-                    for (int i = 0; i < consideredLength; i++) {
-                        [template appendString:@"null,"];
-                    }
-                }
+//                if ([[matchedText substringFromIndex:[matchedText length]] isEqualToString:@"]"]){
+//                    consideredLength -= 1; // remove the bracket from the count
+//                    
+//                    template = [NSMutableString stringWithString:@""];
+//                    
+//                    for (int i = 0; i < consideredLength; i++) {
+//                        [template appendString:@",null"];
+//                    }
+//                    
+//                    [template appendString:@"]"];
+//                    
+//                }
+//                else {
+//                    if ([[matchedText substringToIndex:1] isEqualToString:@"["]) {
+//                        consideredLength -= 1;
+//                        template = [NSMutableString stringWithString:@"["];
+//                    }
+//                    else {
+//                        template = [NSMutableString stringWithString:@","];
+//                    }
+//                    
+//                    for (int i = 0; i < consideredLength; i++) {
+//                        [template appendString:@"null,"];
+//                    }
+//                }
                 
                 
                 [mutableData replaceCharactersInRange:[match range] withString:template];
@@ -101,7 +127,9 @@ int main(int argc, const char * argv[])
          
             if (error) {
                 // `wow' returns error ...
-                NSPrint(@"%@", [error description]);
+//                NSPrint(@"%@", [error description]);
+                NSPrint(@"%@", mutableData);
+//                NSPrint(@"%@", stringData);
             }
             else {
                 @try {
