@@ -11,7 +11,7 @@
 
 @interface Translator : NSObject
 
-- (instancetype)initWithQuery:(NSString *)query;
-- (Translation *)translate;
+- (Translation *)translate:(NSString *)query
+                     error:(NSError **)error;
 
 @end

@@ -10,9 +10,6 @@
 
 @interface Translation : NSObject
 
-- (BOOL)hasError;
-- (NSError *)error;
-- (instancetype)initWithData:(NSData *)data
-                    andError:(NSError *)error;
+- (instancetype)initWithContents:(NSArray *)contents;
 
 @end

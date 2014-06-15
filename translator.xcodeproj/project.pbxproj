@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AFA77774194C00BE009799F6 /* Translator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77773194C00BE009799F6 /* Translator.m */; };
 		AFA77777194C0422009799F6 /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77776194C0422009799F6 /* Translation.m */; };
+		AFA7777D194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA7777C194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m */; };
+		AFA77783194DE5D1009799F6 /* NSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77782194DE5D1009799F6 /* NSPrint.m */; };
 		AFD5A7F51946B620003D763E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD5A7F41946B620003D763E /* Foundation.framework */; };
 		AFD5A7F81946B620003D763E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD5A7F71946B620003D763E /* main.m */; };
 		AFD5A7FC1946B620003D763E /* translator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFD5A7FB1946B620003D763E /* translator.1 */; };
@@ -32,6 +34,10 @@
 		AFA77773194C00BE009799F6 /* Translator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translator.m; sourceTree = "<group>"; };
 		AFA77775194C0422009799F6 /* Translation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translation.h; sourceTree = "<group>"; };
 		AFA77776194C0422009799F6 /* Translation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translation.m; sourceTree = "<group>"; };
+		AFA7777B194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+WeirdJSON.h"; sourceTree = "<group>"; };
+		AFA7777C194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+WeirdJSON.m"; sourceTree = "<group>"; };
+		AFA77781194DE5D1009799F6 /* NSPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPrint.h; sourceTree = "<group>"; };
+		AFA77782194DE5D1009799F6 /* NSPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPrint.m; sourceTree = "<group>"; };
 		AFD5A7F11946B620003D763E /* translator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = translator; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5A7F41946B620003D763E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFD5A7F71946B620003D763E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -86,6 +92,10 @@
 				AFA77773194C00BE009799F6 /* Translator.m */,
 				AFA77775194C0422009799F6 /* Translation.h */,
 				AFA77776194C0422009799F6 /* Translation.m */,
+				AFA7777B194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.h */,
+				AFA7777C194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m */,
+				AFA77781194DE5D1009799F6 /* NSPrint.h */,
+				AFA77782194DE5D1009799F6 /* NSPrint.m */,
 			);
 			path = translator;
 			sourceTree = "<group>";
@@ -150,8 +160,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFA77777194C0422009799F6 /* Translation.m in Sources */,
+				AFA77783194DE5D1009799F6 /* NSPrint.m in Sources */,
 				AFD5A7F81946B620003D763E /* main.m in Sources */,
 				AFA77774194C00BE009799F6 /* Translator.m in Sources */,
+				AFA7777D194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
