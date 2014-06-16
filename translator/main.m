@@ -16,7 +16,7 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool {
         
-        if (argc < 1) {
+        if (argc < 2) {
             NSPrint(@"Not enough arguments.");
             return 1;
         }
