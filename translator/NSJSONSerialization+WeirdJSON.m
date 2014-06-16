@@ -15,29 +15,41 @@
                         error:(NSError *__autoreleasing *)error
 {
     
-    NSString *dataString = [[NSString alloc] initWithData:data
-                                                 encoding:NSUTF8StringEncoding];
+    NSMutableString *dataString = [[NSMutableString alloc] initWithData:data
+                                                               encoding:NSUTF8StringEncoding];
     
     // Sanitize dataString
     // dataString is almost a JSON
     // except it containts contiguous commas
     // that get substituted by null-interspaced commas
     // by regular Javascript parsers
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"((?<=\\,)\\,)|(\\[\\,)|(\\,\\])"
+    
+    // Treat [, and ,] cases
+    [dataString replaceOccurrencesOfString:@"[,"
+                                withString:@"[null,"
+                                   options:NSCaseInsensitiveSearch
+                                     range:NSMakeRange(0, [dataString length])];
+    
+    [dataString replaceOccurrencesOfString:@",]"
+                                withString:@",null]"
+                                   options:NSCaseInsensitiveSearch
+                                     range:NSMakeRange(0, [dataString length])];
+    
+    // Treat ,,+ cases, only substitute those commas
+    // who have a comma looking behind
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(?<=\\,)\\,"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:NULL];
     
-    NSArray *matches = [regex matchesInString:stringData
+    NSArray *matches = [regex matchesInString:dataString
                                       options:0
-                                        range:NSMakeRange(0, [stringData length])];
+                                        range:NSMakeRange(0, [dataString length])];
     
-    NSMutableString *mutableData = [stringData mutableCopy];
     NSMutableString *template;
     NSString *matchedText;
-    //            NSInteger consideredLength;
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        matchedText = [mutableData substringWithRange:[match range]];
+        matchedText = [dataString substringWithRange:[match range]];
         
         if ([matchedText isEqualTo:@",,"]) {
             template = [NSMutableString stringWithString:@",null,"];
@@ -49,42 +61,13 @@
             template = [NSMutableString string];
         }
         
-        //                consideredLength = [matchedText length] - 1;
-        
-        //                if ([[matchedText substringFromIndex:[matchedText length]] isEqualToString:@"]"]){
-        //                    consideredLength -= 1; // remove the bracket from the count
-        //
-        //                    template = [NSMutableString stringWithString:@""];
-        //
-        //                    for (int i = 0; i < consideredLength; i++) {
-        //                        [template appendString:@",null"];
-        //                    }
-        //
-        //                    [template appendString:@"]"];
-        //
-        //                }
-        //                else {
-        //                    if ([[matchedText substringToIndex:1] isEqualToString:@"["]) {
-        //                        consideredLength -= 1;
-        //                        template = [NSMutableString stringWithString:@"["];
-        //                    }
-        //                    else {
-        //                        template = [NSMutableString stringWithString:@","];
-        //                    }
-        //
-        //                    for (int i = 0; i < consideredLength; i++) {
-        //                        [template appendString:@"null,"];
-        //                    }
-        //                }
-        
-        
-        [mutableData replaceCharactersInRange:[match range] withString:template];
+        [dataString replaceCharactersInRange:[match range] withString:template];
     }
     
     
-    NSData* newData = [mutableData dataUsingEncoding:NSUTF8StringEncoding];
+    NSData* sanitizedData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
-    return [NSJSONSerialization JSONObjectWithData:newData
+    return [NSJSONSerialization JSONObjectWithData:sanitizedData
                                             options:opt
                                               error:error];
 
