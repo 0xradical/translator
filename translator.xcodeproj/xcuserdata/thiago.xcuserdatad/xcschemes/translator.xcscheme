@@ -60,6 +60,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "teste"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "time"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

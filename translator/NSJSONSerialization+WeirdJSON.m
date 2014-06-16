@@ -41,35 +41,18 @@
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:NULL];
     
-    NSArray *matches = [regex matchesInString:dataString
-                                      options:0
-                                        range:NSMakeRange(0, [dataString length])];
     
-    NSMutableString *template;
-    NSString *matchedText;
-    
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        matchedText = [dataString substringWithRange:[match range]];
+    [regex replaceMatchesInString:dataString
+                          options:0
+                            range:NSMakeRange(0, [dataString length])
+                     withTemplate:@"null,"];
         
-        if ([matchedText isEqualTo:@",,"]) {
-            template = [NSMutableString stringWithString:@",null,"];
-        } else if ([matchedText isEqualTo:@"[,"]) {
-            template = [NSMutableString stringWithString:@"[null,"];
-        } else if ([matchedText isEqualTo:@",]"]) {
-            template = [NSMutableString stringWithString:@",null]"];
-        } else {
-            template = [NSMutableString string];
-        }
-        
-        [dataString replaceCharactersInRange:[match range] withString:template];
-    }
-    
     
     NSData* sanitizedData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
-    return [NSJSONSerialization JSONObjectWithData:sanitizedData
-                                            options:opt
-                                              error:error];
+    return [self JSONObjectWithData:sanitizedData
+                            options:opt
+                              error:error];
 
 }
 

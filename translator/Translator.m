@@ -21,19 +21,25 @@ static NSString* URLFormat = @"https://translate.google.com/translate_a/single?c
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
+    NSError *connectionError = nil;
+    
     NSData *data = [NSURLConnection sendSynchronousRequest:request
                                          returningResponse:NULL
-                                                     error:error];
+                                                     error:&connectionError];
     
-    if (error) {
+    if (connectionError) {
+        *error = connectionError;
         return nil;
     }
     else {
         
+        NSError *deserializationError = nil;
+        
         NSArray *translationContents = [NSJSONSerialization JSONObjectWithWeirdData:data
                                                                             options:0
-                                                                              error:error];
-        if (error) {
+                                                                              error:&deserializationError];
+        if (deserializationError) {
+            *error = deserializationError;
             return nil;
         }
         else {
