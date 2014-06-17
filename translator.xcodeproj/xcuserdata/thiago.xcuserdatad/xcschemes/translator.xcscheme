@@ -63,6 +63,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "william"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "wow"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -72,7 +76,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "talk"
-            isEnabled = "YES">
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "james"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
