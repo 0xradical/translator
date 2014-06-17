@@ -34,29 +34,75 @@
 
     NSMutableString *result = [NSMutableString string];
     
-    NSString *query = _contents[0][0][1];
-    NSString *translation = _contents[0][0][0];
+    NSString *translation   = _contents[0][0][0];
+    NSString *query         = _contents[0][0][1];
     NSString *pronunciation = _contents[0][1][3];
-    NSString *grammarClass = _contents[1][0][0];
-    NSString *definition = _contents[12][0][1][0][0];
-    NSString *example = _contents[12][0][1][0][2];
     
     if ([translation isEqualTo:query]) {
         [result appendString:[NSString stringWithFormat:@"No translation found for %@\n", query]];
     }
     else {
-        [result appendString:[NSString stringWithFormat:@"Translations of %@ |%@| ▶%@\n", query, pronunciation, grammarClass]];
+        [result appendString:[NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation]];
         
-        for (NSArray *alternates in _contents[1][0][2]) {
-            [result appendString:[NSString stringWithFormat:@"(%@) %@: %@\n",
-                                                            alternates[4],
-                                                            alternates[0],
-                                                            [alternates[1]
-                                   componentsJoinedByString:@", "]]];
+        NSString *grammarClass;
+        NSString *article;
+        NSString *alternate;
+        NSArray *alternateTranslations;
+        
+        for (int grammarClassIndex = 0;
+             grammarClassIndex < [_contents[1] count];
+             grammarClassIndex++) {
+            grammarClass = _contents[1][grammarClassIndex][0];
+            
+            [result appendString:[NSString stringWithFormat:@"Translations of %@ ▶%@\n\n", query, grammarClass]];
+            
+            for (NSArray *alternates in _contents[1][grammarClassIndex][2]) {
+                alternate = alternates[0];
+                alternateTranslations = alternates[1];
+                
+                // Noun entries have an extra for article
+                if ([alternates count] == 5) {
+                    article = alternates[4];
+                    
+                    [result appendString:[NSString stringWithFormat:@"(%@) %@: %@\n",
+                                          article,
+                                          alternate,
+                                          [alternateTranslations componentsJoinedByString:@", "]]];
+
+                } else {
+                    [result appendString:[NSString stringWithFormat:@"%@: %@\n",
+                                          alternate,
+                                          [alternateTranslations componentsJoinedByString:@", "]]];
+                    
+                }
+                
+            }
+            
+            [result appendString:@"\n"];
+        }
+
+        NSString *definition;
+        NSString *example;
+        
+        for (int grammarClassIndex = 0;
+             grammarClassIndex < [_contents[12] count];
+             grammarClassIndex++) {
+            grammarClass = _contents[12][grammarClassIndex][0];
+            
+            [result appendString:[NSString stringWithFormat:@"Definitions of %@ ▶%@\n\n", query, grammarClass]];
+            
+            for (NSArray *definitionsAndExamples in _contents[12][grammarClassIndex][1]) {
+                definition = definitionsAndExamples[0];
+                example = definitionsAndExamples[2];
+                
+                [result appendString:[NSString stringWithFormat:@"%@\n", definition]];
+                [result appendString:[NSString stringWithFormat:@"\"%@\"\n", example]];
+                [result appendString:@"\n"];
+                
+            }
+            
         }
         
-        [result appendString:[NSString stringWithFormat:@"Definitions of %@ ▶%@\n", query, grammarClass]];
-        [result appendString:[NSString stringWithFormat:@"%@\n%@\n", definition, example]];
     }
     
     return result;

@@ -47,7 +47,6 @@
                             range:NSMakeRange(0, [dataString length])
                      withTemplate:@"null,"];
         
-    
     NSData* sanitizedData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
     return [self JSONObjectWithData:sanitizedData

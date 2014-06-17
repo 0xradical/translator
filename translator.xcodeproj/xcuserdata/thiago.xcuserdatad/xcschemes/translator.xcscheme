@@ -66,6 +66,10 @@
             argument = "time"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "talk"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
