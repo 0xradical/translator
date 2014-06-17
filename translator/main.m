@@ -36,7 +36,8 @@ int main(int argc, const char * argv[])
             
             [whiteSpaceRegex replaceMatchesInString:query
                                             options:0
-                                              range:NSMakeRange(0, [query length]) withTemplate:@"%20"];
+                                              range:NSMakeRange(0, [query length])
+                                       withTemplate:@"%20"];
             
             translator = [[Translator alloc] init];
             
