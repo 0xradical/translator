@@ -51,7 +51,7 @@
     }
     
     // if has any translation
-    if ((id)_contents[1] != [NSNull null]) {
+    if ([_contents count] > 1 && (id)_contents[1] != [NSNull null]) {
         
         NSString *grammarClass;
         NSString *article;
@@ -93,7 +93,7 @@
     }
     
     // if has any definition
-    if ((id)_contents[12] != [NSNull null]) {
+    if ([_contents count] > 12 && (id)_contents[12] != [NSNull null]) {
         
         NSString *grammarClass;
         NSString *definition;
