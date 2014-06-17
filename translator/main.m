@@ -22,11 +22,21 @@ int main(int argc, const char * argv[])
         }
         else {
             NSError *error;
-            NSString *query;
+            NSRegularExpression *whiteSpaceRegex;
+            NSMutableString *query;
             Translator *translator;
             Translation *translation;
             
-            query = [NSString stringWithUTF8String:argv[1]];
+            query = [NSMutableString stringWithUTF8String:argv[1]];
+            
+            // substitute params like "United    Kingdom" for "United%20Kingdom"
+            whiteSpaceRegex = [NSRegularExpression regularExpressionWithPattern:@"\\s+"
+                                                                        options:0
+                                                                          error:NULL];
+            
+            [whiteSpaceRegex replaceMatchesInString:query
+                                            options:0
+                                              range:NSMakeRange(0, [query length]) withTemplate:@"%20"];
             
             translator = [[Translator alloc] init];
             

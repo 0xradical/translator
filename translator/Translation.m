@@ -43,7 +43,7 @@
         pronunciation = _contents[0][1][3];
     }
     
-    if (pronunciation) {
+    if (pronunciation && [pronunciation length] > 0) {
         [result appendString:[NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation]];
 
     } else {
