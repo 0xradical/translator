@@ -10,19 +10,5 @@
 
 @implementation NSString (ColoredString)
 
-+ (instancetype)stringWithForeground:(int)foreground
-                       andBackground:(int)background
-                           andFormat:(NSString *)format, ...
-{
-    va_list args;
-    va_start(args, format);
-    
-    NSMutableString *string = [[NSMutableString alloc] initWithFormat:format
-                                                            arguments:args];
-    
-    va_end(args);
-    
-    return string;
-}
 
 @end

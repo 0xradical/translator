@@ -1,8 +1,8 @@
 //
-//  NSString+ColoredString.h
+//  NSMutableString+ColoredString.h
 //  translator
 //
-//  Created by thiago on 6/19/14.
+//  Created by thiago on 6/20/14.
 //  Copyright (c) 2014 thiagobrandam. All rights reserved.
 //
 
@@ -25,10 +25,10 @@
 #define CYAN        6
 #define WHITE       7
 
-@interface NSString (ColoredString)
+@interface NSMutableString (ColoredString)
 
-+ (instancetype)withTerminalBehavior:(NSInteger)behavior
-                     backgroundColor:(NSInteger)backgroundColor
-                     foregroundColor:(NSInteger)foregroundColor;
+- (void)terminalBehavior:(NSInteger)terminalBehavior;
+- (void)foregroundColor:(NSInteger)foregroundColor;
+- (void)backgroundColor:(NSInteger)backgroundColor;
 
 @end
