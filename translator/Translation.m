@@ -7,6 +7,7 @@
 //
 
 #import "Translation.h"
+#import "NSString+ColoredString.h"
 
 @interface Translation ()
 {
@@ -44,7 +45,10 @@
     }
     
     if (pronunciation && [pronunciation length] > 0) {
-        [result appendString:[NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation]];
+        NSString *test = [NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation];
+        NSTerminalBehavior behavior = NSMakeTerminalBehavior(BRIGHT, WHITE, BLACK);
+        
+        [result appendString:[test withTerminalBehavior:behavior]];
 
     } else {
         [result appendString:[NSString stringWithFormat:@"%@: %@\n\n", query, translation]];
