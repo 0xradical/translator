@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF3E29D01953CDFE0081D934 /* NSString+ColoredString.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3E29CF1953CDFE0081D934 /* NSString+ColoredString.m */; };
 		AFA77774194C00BE009799F6 /* Translator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77773194C00BE009799F6 /* Translator.m */; };
 		AFA77777194C0422009799F6 /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA77776194C0422009799F6 /* Translation.m */; };
 		AFA7777D194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA7777C194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AF3E29CE1953CDFE0081D934 /* NSString+ColoredString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ColoredString.h"; sourceTree = "<group>"; };
+		AF3E29CF1953CDFE0081D934 /* NSString+ColoredString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ColoredString.m"; sourceTree = "<group>"; };
 		AFA77772194C00BE009799F6 /* Translator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translator.h; sourceTree = "<group>"; };
 		AFA77773194C00BE009799F6 /* Translator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translator.m; sourceTree = "<group>"; };
 		AFA77775194C0422009799F6 /* Translation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translation.h; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 				AFA7777C194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m */,
 				AFA77781194DE5D1009799F6 /* NSPrint.h */,
 				AFA77782194DE5D1009799F6 /* NSPrint.m */,
+				AF3E29CE1953CDFE0081D934 /* NSString+ColoredString.h */,
+				AF3E29CF1953CDFE0081D934 /* NSString+ColoredString.m */,
 			);
 			path = translator;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				AFA77777194C0422009799F6 /* Translation.m in Sources */,
 				AFA77783194DE5D1009799F6 /* NSPrint.m in Sources */,
 				AFD5A7F81946B620003D763E /* main.m in Sources */,
+				AF3E29D01953CDFE0081D934 /* NSString+ColoredString.m in Sources */,
 				AFA77774194C00BE009799F6 /* Translator.m in Sources */,
 				AFA7777D194DDB59009799F6 /* NSJSONSerialization+WeirdJSON.m in Sources */,
 			);
