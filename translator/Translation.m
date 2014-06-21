@@ -44,19 +44,23 @@
         pronunciation = _contents[0][1][3];
     }
     
+    NSString *header;
+    
     if (pronunciation && [pronunciation length] > 0) {
-        NSString *test = [NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation];
-        NSTerminalBehavior behavior = NSMakeTerminalBehavior(BRIGHT, WHITE, BLACK);
+        header = [NSString stringWithFormat:@"%@ |%@|: %@\n\n", query, pronunciation, translation];
         
-        [result appendString:[test withTerminalBehavior:behavior]];
-
     } else {
-        [result appendString:[NSString stringWithFormat:@"%@: %@\n\n", query, translation]];
+        header = [NSString stringWithFormat:@"%@: %@\n\n", query, translation];
     }
+    
+    header = [header withTerminalBehavior:NSTerminalBehaviorBold];
+
+    [result appendString:header];
     
     // if has any translation
     if ([_contents count] > 1 && (id)_contents[1] != [NSNull null]) {
         
+        NSString *alternatesHeader;
         NSString *grammarClass;
         NSString *article;
         NSString *alternate;
@@ -67,7 +71,9 @@
              grammarClassIndex++) {
             grammarClass = _contents[1][grammarClassIndex][0];
             
-            [result appendString:[NSString stringWithFormat:@"Translations of %@ ▶%@\n\n", query, grammarClass]];
+            alternatesHeader = [NSString stringWithFormat:@"Translations of %@ ▶%@\n\n", query, grammarClass];
+            
+            [result appendString:[alternatesHeader withTerminalBehavior:NSTerminalBehaviorBold]];
             
             for (NSArray *alternates in _contents[1][grammarClassIndex][2]) {
                 alternate = alternates[0];
@@ -99,6 +105,7 @@
     // if has any definition
     if ([_contents count] > 12 && (id)_contents[12] != [NSNull null]) {
         
+        NSString *definitionHeader;
         NSString *grammarClass;
         NSString *definition;
         NSString *example;
@@ -108,15 +115,17 @@
              grammarClassIndex++) {
             grammarClass = _contents[12][grammarClassIndex][0];
             
-            [result appendString:[NSString stringWithFormat:@"Definitions of %@ ▶%@\n\n", query, grammarClass]];
+            definitionHeader = [NSString stringWithFormat:@"Definitions of %@ ▶%@\n\n", query, grammarClass];
+            
+            [result appendString:[definitionHeader withTerminalBehavior:NSTerminalBehaviorBold]];
             
             for (NSArray *definitionsAndExamples in _contents[12][grammarClassIndex][1]) {
                 definition = definitionsAndExamples[0];
                 [result appendString:[NSString stringWithFormat:@"%@\n", definition]];
                 
                 if ([definitionsAndExamples count] > 2) {
-                    example = definitionsAndExamples[2];
-                    [result appendString:[NSString stringWithFormat:@"\"%@\"\n", example]];
+                    example = [NSString stringWithFormat:@"\"%@\"\n", definitionsAndExamples[2]];
+                    [result appendString:[example withTerminalBehavior:NSTerminalBehaviorDimmed]];
                 }
                 
                 [result appendString:@"\n"];

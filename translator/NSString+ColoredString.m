@@ -8,21 +8,23 @@
 
 #import "NSString+ColoredString.h"
 
+const NSTerminalBehavior NSTerminalBehaviorBold = {
+    BRIGHT, WHITE + 30, BLACK + 40
+};
+
+const NSTerminalBehavior NSTerminalBehaviorDimmed = {
+    DIM, WHITE + 30, BLACK + 40
+};
+
 @implementation NSString (ColoredString)
 
 - (instancetype)withTerminalBehavior:(NSTerminalBehavior)behavior
 {
-    NSMutableString *baseLine = [NSMutableString stringWithString:self];
+    NSString *baseLine = [NSString stringWithString:self];
     
-    NSString *behaviorString = [NSString stringWithFormat:@"%c[%ld;%ld;%ldm", 0x1B, behavior.function, behavior.foregroundColor, behavior.backgroundColor];
+    NSString *stringWithBehavior = [NSString stringWithFormat:@"\e[%ld;%ld;%ldm%@\e[0m", behavior.function, behavior.foregroundColor, behavior.backgroundColor, baseLine];
     
-    NSString *reset = [NSString stringWithFormat:@"%c[%d;%d;%dm", 0x1B, RESET, WHITE, BLACK];
-    
-    [baseLine insertString:behaviorString atIndex:0];
-    [baseLine insertString:reset atIndex:[baseLine length]];
-    
-    return baseLine;
-    
+    return stringWithBehavior;
 }
 
 @end
