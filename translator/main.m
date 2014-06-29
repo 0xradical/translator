@@ -10,6 +10,7 @@
 #import "Translator.h"
 #import "Translation.h"
 #import "NSPrint.h"
+#import "NSPagedPrint.h"
 
 int main(int argc, const char * argv[])
 {
@@ -48,11 +49,7 @@ int main(int argc, const char * argv[])
                 NSPrint(@"%@", error);
             }
             else {
-                FILE *less = popen("less", "w");
-                fprintf(less, "%s\n", [[translation description] UTF8String]);
-                pclose(less);
-                
-//                NSPrint(@"%@", translation);
+                NSPagedPrint(@"%@", translation);
             }
                         
         }

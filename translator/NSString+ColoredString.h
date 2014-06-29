@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-// Terminal Scape Codes
+// Terminal Escape Codes
 // As per http://www.linuxjournal.com/article/8603, with some minor fixes
 // The "WHITE" color is actually GRAY, dude is clueless!
 // Also, I just use \e[0m as RESET, much simpler
