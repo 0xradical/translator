@@ -48,7 +48,11 @@ int main(int argc, const char * argv[])
                 NSPrint(@"%@", error);
             }
             else {
-                NSPrint(@"%@", translation);
+                FILE *less = popen("less", "w");
+                fprintf(less, "%s\n", [[translation description] UTF8String]);
+                pclose(less);
+                
+//                NSPrint(@"%@", translation);
             }
                         
         }
